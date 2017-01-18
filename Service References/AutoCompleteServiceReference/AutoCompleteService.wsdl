@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SearchFriends">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="prefixText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFriendsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchFriendsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchFriendsSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchFriends" />
+  </wsdl:message>
+  <wsdl:message name="SearchFriendsSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchFriendsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AutoCompleteServiceSoap">
+    <wsdl:operation name="SearchFriends">
+      <wsdl:input message="tns:SearchFriendsSoapIn" />
+      <wsdl:output message="tns:SearchFriendsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AutoCompleteServiceSoap" type="tns:AutoCompleteServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchFriends">
+      <soap:operation soapAction="http://tempuri.org/SearchFriends" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AutoCompleteServiceSoap12" type="tns:AutoCompleteServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchFriends">
+      <soap12:operation soapAction="http://tempuri.org/SearchFriends" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AutoCompleteService">
+    <wsdl:port name="AutoCompleteServiceSoap" binding="tns:AutoCompleteServiceSoap">
+      <soap:address location="http://localhost:8656/AutoCompleteService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AutoCompleteServiceSoap12" binding="tns:AutoCompleteServiceSoap12">
+      <soap12:address location="http://localhost:8656/AutoCompleteService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
